@@ -132,6 +132,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ActorController.cs" />
     <Compile Include="Controllers\CastController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -263,14 +264,13 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Create.cshtml" />
     <Content Include="Views\Home\_Movies.cshtml" />
-    <Content Include="Views\Cast\Index.cshtml" />
-    <Content Include="Views\Cast\Details.cshtml" />
-    <Content Include="Views\Cast\Create.cshtml" />
-    <Content Include="Views\Cast\Delete.cshtml" />
-    <Content Include="Views\Cast\Edit.cshtml" />
     <Content Include="Views\Shared\_Create.cshtml" />
     <Content Include="Views\Home\_Edit.cshtml" />
     <Content Include="Views\Home\_Delete.cshtml" />
+    <Content Include="Views\Cast\_Create.cshtml" />
+    <Content Include="Views\Cast\_Delete.cshtml" />
+    <Content Include="Views\Cast\_Edit.cshtml" />
+    <Content Include="Views\Actor\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

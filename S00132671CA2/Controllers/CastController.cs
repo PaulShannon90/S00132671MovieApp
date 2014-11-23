@@ -13,43 +13,22 @@ namespace S00132671CA2.Controllers
     {
         private MoviesContext db = new MoviesContext();
 
-        //
-        // GET: /Cast/
+        
 
-
-        public ActionResult Index()
-        {
-            var cast = db.Cast.Include(c => c.Movie).Include(c => c.Actor);
-            return View(cast.ToList());
-        }
-
-        //
-        // GET: /Cast/Details/5
-
-        public ActionResult Details(int? MovieId, int? ActorId)
-        {
-            CastList castlist = db.Cast.Find(MovieId, ActorId);
-            if (castlist == null)
-            {
-                return HttpNotFound();
-            }
-            return View(castlist);
-        }
 
         //
         // GET: /Cast/Create
 
-        public ActionResult Create()
+        [HttpGet]
+        public PartialViewResult Create()
         {
             CastList castlist = new CastList();
             ViewBag.MovieId = new SelectList(db.Movies, "MovieId", "MovieName", castlist.MovieId);
             ViewBag.ActorId = new SelectList(db.Actors, "ActorId", "ActorName", castlist.ActorId);
-           
-            return View();
+
+            return PartialView("_Create");
         }
 
-        //
-        // POST: /Cast/Create
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -57,9 +36,19 @@ namespace S00132671CA2.Controllers
         {
             if (ModelState.IsValid)
             {
+                var login = from d in db.Cast
+                            where d.ActorId == castlist.ActorId
+                            && d.MovieId == castlist.MovieId
+                            select d;
+
+                if (login.Any())
+                {
+                    return RedirectToAction("Details", "Home", new { id = castlist.MovieId, message = "DataError" });
+                }
+
                 db.Cast.Add(castlist);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Home", new { id = castlist.MovieId });
             }
 
             ViewBag.MovieId = new SelectList(db.Movies, "MovieId", "MovieName", castlist.MovieId);
@@ -69,19 +58,17 @@ namespace S00132671CA2.Controllers
 
         //
         // GET: /Cast/Edit/5
-
-        public ActionResult Edit(int? MovieId, int? ActorId)
+        [HttpGet]
+        public PartialViewResult Edit(int? MovieId, int? ActorId)
         {
+
             CastList castlist = db.Cast.Find(MovieId, ActorId);
-            if (castlist == null)
-            {
-                return HttpNotFound();
-            }
+
             ViewBag.MovieId = new SelectList(db.Movies, "MovieId", "MovieName", castlist.MovieId);
             ViewBag.ActorId = new SelectList(db.Actors, "ActorId", "ActorName", castlist.ActorId);
-            return View(castlist);
-        }
 
+            return PartialView("_Edit", db.Cast.Find(MovieId, ActorId));
+        }
         //
         // POST: /Cast/Edit/5
 
@@ -93,7 +80,7 @@ namespace S00132671CA2.Controllers
             {
                 db.Entry(castlist).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Home", new { id = castlist.MovieId });
             }
             ViewBag.MovieId = new SelectList(db.Movies, "MovieId", "MovieName", castlist.MovieId);
             ViewBag.ActorId = new SelectList(db.Actors, "ActorId", "ActorName", castlist.ActorId);
@@ -102,28 +89,25 @@ namespace S00132671CA2.Controllers
 
         //
         // GET: /Cast/Delete/5
-
-        public ActionResult Delete(int id = 0)
+        public PartialViewResult Delete(int? MovieId, int? ActorId)
         {
-            CastList castlist = db.Cast.Find(id);
-            if (castlist == null)
-            {
-                return HttpNotFound();
-            }
-            return View(castlist);
+            return PartialView("_Delete", db.Cast.Find(MovieId, ActorId));
         }
 
-        //
         // POST: /Cast/Delete/5
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int? MovieId, int? ActorId)
         {
-            CastList castlist = db.Cast.Find(id);
-            db.Cast.Remove(castlist);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                CastList castlist = db.Cast.Find(MovieId, ActorId);
+                db.Cast.Remove(castlist);
+                db.SaveChanges();
+                return RedirectToAction("Details", "Home", new { id = MovieId });
+            }
+            else return View();
         }
 
         protected override void Dispose(bool disposing)

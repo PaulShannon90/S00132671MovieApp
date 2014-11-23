@@ -67,6 +67,16 @@ namespace S00132671CA2.Models
         [Required]
         [Display(Name = "Actor Name")]
         public string ActorName { get; set; }
+
+        [Display(Name = "Date Of Birth"), DataType(DataType.Date),
+                    DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [Required]
+        public DateTime DOB { get; set; }
+           [Required]
+        public string Bio { get; set; }
+         [Required]
+           [RegularExpression(@"^http(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$", ErrorMessage = "Please enter a valid URL")]
+           public string ActorImage { get; set; }
         public virtual List<CastList> Movies { get; set; }
         
     }
