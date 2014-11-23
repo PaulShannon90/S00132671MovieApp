@@ -271,6 +271,7 @@
     <Content Include="Views\Cast\_Delete.cshtml" />
     <Content Include="Views\Cast\_Edit.cshtml" />
     <Content Include="Views\Actor\Index.cshtml" />
+    <Content Include="Views\Actor\_Actors.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using S00132671CA2.Models;
+using PagedList;
 
 namespace S00132671CA2.Controllers
 {
@@ -11,13 +12,41 @@ namespace S00132671CA2.Controllers
     {
         //
         // GET: /Actor/
+
+
         MoviesContext db = new MoviesContext();
 
-        public ActionResult Index()
-        {
-            var actors = db.Actors.ToList();
 
-            return View(actors);
+        public ActionResult Autocomplete(string term)
+        {
+            var model =
+              db.Actors.Where(mov => mov.ActorName.StartsWith(term))
+              .Take(5)
+              .Select(movie => new
+              {
+                  label = movie.ActorName
+              });
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Index(string message, int page = 1, string searchTerm = null)
+        {
+
+            var actors = from mo in db.Actors
+                         orderby mo.ActorName ascending
+                         where searchTerm == null || mo.ActorName.Contains(searchTerm)
+                         select mo;
+
+
+
+
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_Actors", actors.ToPagedList(page, 2));
+            }
+
+            return View(actors.ToPagedList(page, 2));
         }
 
         //
