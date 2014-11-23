@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using S00132671CA2.Models;
 using PagedList;
+using System.Data;
 
 namespace S00132671CA2.Controllers
 {
@@ -43,39 +44,62 @@ namespace S00132671CA2.Controllers
 
             if (Request.IsAjaxRequest())
             {
-                return PartialView("_Actors", actors.ToPagedList(page, 2));
+                return PartialView("_Actors", actors.ToPagedList(page, 4));
             }
 
-            return View(actors.ToPagedList(page, 2));
+            return View(actors.ToPagedList(page, 4));
         }
 
         //
         // GET: /Actor/Details/5
 
-        public ActionResult Details(int id)
+        public ActionResult Details(int id, string message)
         {
-            return View();
+            if (!string.IsNullOrEmpty(message))
+            {
+                ViewBag.message = message;
+
+            }
+
+            var actors = db.Actors.Find(id);
+
+            if (actors == null)
+                return RedirectToAction("Index", new { message = "Warning" });
+
+            return View(actors);
         }
 
         //
         // GET: /Actor/Create
 
-        public ActionResult Create()
+        [HttpGet]
+        public PartialViewResult Create()
         {
-            return View();
+            return PartialView("_Create");
         }
+
 
         //
         // POST: /Actor/Create
 
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Actor actor)
         {
             try
             {
-                // TODO: Add insert logic here
+                if (ModelState.IsValid)
+                {
 
-                return RedirectToAction("Index");
+                    db.Actors.Add(actor);
+                    db.SaveChanges();
+
+                    return RedirectToAction("Details", "Actor", new { id = actor.ActorId  });
+                }
+                else
+                {
+                    return View(actor);
+                }
+
             }
             catch
             {
@@ -86,22 +110,27 @@ namespace S00132671CA2.Controllers
         //
         // GET: /Actor/Edit/5
 
-        public ActionResult Edit(int id)
+        [HttpGet]
+        public PartialViewResult Edit(int id)
         {
-            return View();
+
+
+            return PartialView("_Edit", db.Actors.Find(id));
         }
 
         //
         // POST: /Actor/Edit/5
 
+        
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Actor editedActor)
         {
             try
             {
-                // TODO: Add update logic here
 
-                return RedirectToAction("Index");
+                db.Entry(editedActor).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Details", new { id = editedActor.ActorId });
             }
             catch
             {
@@ -111,28 +140,21 @@ namespace S00132671CA2.Controllers
 
         //
         // GET: /Actor/Delete/5
-
-        public ActionResult Delete(int id)
+        public PartialViewResult Delete(int id)
         {
-            return View();
+            return PartialView("_Delete", db.Actors.Find(id));
         }
 
         //
         // POST: /Actor/Delete/5
 
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        
+        [HttpPost, ActionName("Delete")]
+        public ActionResult ConfimDelete(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            db.Actors.Remove(db.Actors.Find(id));
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }

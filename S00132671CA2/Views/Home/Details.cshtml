@@ -37,7 +37,7 @@
 
                     <div class="col-md-5">
 
-                        <a class="btn btn-default btn-sm" style="margin-bottom: 20px;">
+                        <a class="btn btn-default btn-sm" href="@Url.Action("Details", "Actor", new { id = @item.ActorId })" style="margin-bottom: 20px;">
                             <span class=" glyphicon glyphicon-user">
                             </span> @item.Actor.ActorName
                         </a>
@@ -117,7 +117,7 @@
         $('#Placement').load('@Url.Action("Edit")' + '?id=' + movieID).show();
         $('#HelperModal').modal('show');
     }
-    function popCreate() {
+        function createMovie() {
         $('#Placement').load('@Url.Action("Create")').show();
         $('#HelperModal').modal('show');
     }
@@ -134,6 +134,10 @@
 
         function showCastNameDeleteModal(movieID, actorId) {
             $('#Placement').load('@Url.Action("Delete","Cast")' + '?MovieId=' + movieID + '&ActorId=' + actorId).show();
+            $('#HelperModal').modal('show');
+        }
+        function createActor() {
+            $('#Placement').load('@Url.Action("Create", "Actor")').show();
             $('#HelperModal').modal('show');
         }
 

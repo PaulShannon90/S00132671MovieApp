@@ -37,15 +37,20 @@
 
 
 
-        function popCreate() {
+        function createMovie() {
             $('#Placement').load('@Url.Action("Create")').show();
             $('#HelperModal').modal('show');
         }
 
-        function popDelete(movieID) {
-            $('#Placement').load('@Url.Action("Delete")' + '?id=' + movieID).show();
+        function createActor() {
+            $('#Placement').load('@Url.Action("Create", "Actor")').show();
             $('#HelperModal').modal('show');
         }
+
+        @*function popDelete(movieID) {
+            $('#Placement').load('@Url.Action("Delete")' + '?id=' + movieID).show();
+            $('#HelperModal').modal('show');
+        }*@
 
     </script>
 }

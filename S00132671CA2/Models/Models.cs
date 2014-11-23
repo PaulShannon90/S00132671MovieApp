@@ -89,6 +89,8 @@ namespace S00132671CA2.Models
           [Key, Column(Order = 1)]
         public int ActorId { get; set; }
           public virtual Actor Actor { get; set; }
+            [Required]
+            [Display(Name = "Screen Name")]
           public string CastName { get; set; }
 
     }

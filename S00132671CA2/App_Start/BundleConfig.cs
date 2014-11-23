@@ -15,7 +15,10 @@ namespace S00132671CA2
                          "~/Scripts/jquery.unobtrusive*",
                          "~/Scripts/jquery.validate*",
                           "~/Scripts/toastr.js",
-                         "~/Scripts/Site.js"
+                         "~/Scripts/Site.js",
+                         "~/Scripts/tooltipster.js",
+                         "~/Scripts/moment.js",
+                         "~/Scripts/bootstrap-datetimepicker.js"
                           ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
@@ -31,7 +34,7 @@ namespace S00132671CA2
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include( "~/Content/Site.css","~/Content/superheroBootstrap.css",
-                "~/Content/toastr.css", "~/Content/PagedList.css"));
+                "~/Content/toastr.css", "~/Content/PagedList.css", "~/Content/bootstrap-datetimepicker.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",
@@ -46,6 +49,8 @@ namespace S00132671CA2
                         "~/Content/themes/base/jquery.ui.datepicker.css",
                         "~/Content/themes/base/jquery.ui.progressbar.css",
                         "~/Content/themes/base/jquery.ui.theme.css"));
+
+           
         }
     }
 }
