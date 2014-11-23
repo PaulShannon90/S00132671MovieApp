@@ -1,0 +1,147 @@
+﻿@model S00132671CA2.Models.Movie
+
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="hidden-xs hidden-sm col-md-6">
+            <img style="height:75%; width:75%" class="img-responsive" src="@Html.DisplayFor(model => model.PosterURL)" />
+        </div>
+        <div class="xol-sm-12 col-xs-12 col-md-6">
+            <div class="lead"><h1>@Html.DisplayFor(model => model.MovieName)</h1></div>
+            <h4>@Html.DisplayNameFor(model => model.Description)</h4>
+            <hr />
+            @Html.DisplayFor(model => model.Description)
+            <hr />
+            <h4 class="text-center">Starring</h4>
+            <hr />
+
+            @if (@Model.Actors.Count() == 0)
+            {
+                <div class="row">
+
+                    <div class=" text-center">
+                        <h3>This Movie has no Actors associated with it. </h3>
+                        <span style="" class="btn btn-sm btn-primary" onclick="createCastModal()">Add a Screen Name</span>
+                    </div>
+                </div>
+
+            }
+
+
+            @foreach (var item in Model.Actors)
+            {
+                <div class="row">
+
+                    <div class="col-md-5">
+
+                        <a class="btn btn-default btn-sm" style="margin-bottom: 20px;">
+                            <span class=" glyphicon glyphicon-user">
+                            </span> @item.Actor.ActorName
+                        </a>
+                    </div>
+
+                    <div class="col-md-2" style="margin-bottom:20px;">
+                        as
+
+                    </div>
+
+                    <div class="col-md-5">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <span class=" glyphicon glyphicon-user"></span>   @item.CastName <span class="caret"></span>
+                            </button>
+                            <ul style="cursor: pointer;" class="dropdown-menu" role="menu">
+                                <li><a onclick="showCastNameModal(@item.MovieId, @item.ActorId)">Edit Screen Name</a></li>
+                                <li><a onclick="showCastNameDeleteModal(@item.MovieId, @item.ActorId)">Delete Screen Name </a></li>
+
+                            </ul>
+                        </div>
+
+
+
+                        <hr class="hidden-lg hidden-md" />
+                    </div>
+                </div>
+            }
+
+            <hr />
+            <h4 class="text-center">Click on an Actor or Screen Name to Edit their details</h4>
+            <hr />
+            <p>
+                <div>
+                    @Html.ActionLink("Back to Home", "Index", null, new { @class = "btn btn-sm btn-default" })
+                    <span style="" class="btn btn-sm btn-info" onclick="showEditModal('@Model.MovieId')">Edit Movie </span>
+                    <span style="" class="btn btn-sm btn-warning" onclick="showDeleteModal('@Model.MovieId')">Delete</span>
+
+                    <span style="" class="btn btn-sm btn-primary" onclick="createCastModal()">Add a Screen Name</span>
+                </div>
+            </p>
+
+        </div>
+    </div>
+
+
+
+
+    <div class="modal fade" id="HelperModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class=" col-xs-12 col-sm-4" id="Placement">
+
+        </div>
+    </div>
+
+</div>
+
+
+
+@section scripts
+{
+
+    <script>
+
+        $(document).ready(function () {
+            var my = '@ViewBag.message'
+
+            switch(my)
+            {
+                case "DataError":
+                    toastr.error('That actor is already listed for this movie.');
+                    break;
+
+            }
+
+        });
+    function showEditModal(movieID) {
+        $('#Placement').load('@Url.Action("Edit")' + '?id=' + movieID).show();
+        $('#HelperModal').modal('show');
+    }
+    function popCreate() {
+        $('#Placement').load('@Url.Action("Create")').show();
+        $('#HelperModal').modal('show');
+    }
+
+    function showDeleteModal(movieID) {
+        $('#Placement').load('@Url.Action("Delete")' + '?id=' + movieID).show();
+            $('#HelperModal').modal('show');
+    }
+
+        function showCastNameModal(movieID, actorId) {
+            $('#Placement').load('@Url.Action("Edit","Cast")' + '?MovieId=' + movieID + '&ActorId=' + actorId).show();
+            $('#HelperModal').modal('show');
+        }
+
+        function showCastNameDeleteModal(movieID, actorId) {
+            $('#Placement').load('@Url.Action("Delete","Cast")' + '?MovieId=' + movieID + '&ActorId=' + actorId).show();
+            $('#HelperModal').modal('show');
+        }
+
+
+        function createCastModal() {
+            $('#Placement').load('@Url.Action("Create","Cast")').show();
+            $('#HelperModal').modal('show');
+        }
+    </script>
+}
+

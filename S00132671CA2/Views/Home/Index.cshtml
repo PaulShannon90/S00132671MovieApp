@@ -1,0 +1,65 @@
+﻿@model IPagedList<S00132671CA2.Models.Movie>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+
+
+        @Html.Partial("_Movies", Model)
+
+  
+<div class="modal fade" id="HelperModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class=" col-xs-12 col-sm-4" id="Placement">
+
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+
+        $(document).ready(function () {
+            var my = '@ViewBag.message'
+
+            switch (my) {
+                case "Added":
+                    toastr.success('Thanks for adding a Movie');
+                    break;
+                case "Warning":
+                    toastr.warning('That was not the page you were looking for Luke');
+                    break;
+            }
+
+        });
+
+
+
+        function popCreate() {
+            $('#Placement').load('@Url.Action("Create")').show();
+            $('#HelperModal').modal('show');
+        }
+
+        function popDelete(movieID) {
+            $('#Placement').load('@Url.Action("Delete")' + '?id=' + movieID).show();
+            $('#HelperModal').modal('show');
+        }
+
+    </script>
+}
+
+
+
+
+
+
+
+
+
+    
+
+
+
+

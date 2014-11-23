@@ -1,0 +1,65 @@
+﻿@model S00132671CA2.Models.Movie
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>Create a New Movie</legend>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.MovieName, new { @class = "control-label " })
+                        <div >
+                            @Html.TextBoxFor(model => model.MovieName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MovieName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label " })
+                        <div class="">
+                            @Html.TextAreaFor(model => model.Description,  new { @class = "form-control" } )
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PosterURL, htmlAttributes: new { @class = "control-label " })
+                        <div class="">
+                            @Html.TextBoxFor(model => model.PosterURL,  new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.PosterURL, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ScreenShot, htmlAttributes: new { @class = "control-label " })
+                        <div class="">
+                            @Html.TextBoxFor(model => model.ScreenShot, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ScreenShot, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+          
+
+            <p>
+                <input type="submit" value="Create" />
+            </p>
+        </fieldset>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</div>
+
+@section Scripts {
+
+}

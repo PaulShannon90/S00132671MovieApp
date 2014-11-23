@@ -1,0 +1,50 @@
+﻿.ui-tooltip {
+    background: #666;
+    color: white;
+    border: none;
+    padding: 0;
+    opacity: 1;
+}
+.ui-tooltip-content {
+    position: relative;
+    padding: 1em;
+}
+
+hr{
+   border-color: #5bc0de;
+}
+
+.hover {
+    background-color: yellow;
+}
+
+
+.right .ui-tooltip-content::after {
+    top: 18px;
+    left: -10px;
+    border-color: transparent #666;
+    border-width: 10px 10px 10px 0;
+}
+
+.smallScreenLink{
+     text-decoration: none;
+    color:white;
+    
+}
+
+
+
+
+.smallScreen{
+
+  
+     padding:20px; 
+ 
+     opacity: 1; 
+     border-bottom: 3px solid #e3c340; 
+     background-size: 100% 100%; 
+      
+    color:white;
+      text-decoration: none;
+}
+

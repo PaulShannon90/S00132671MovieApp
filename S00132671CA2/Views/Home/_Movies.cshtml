@@ -1,0 +1,41 @@
+﻿@model IPagedList<S00132671CA2.Models.Movie>
+
+
+<div id="movieList">
+    <div class="pagedList text-center row" style="margin-bottom:10px;" data-myscripts-target="#movieList">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
+        PagedListRenderOptions.MinimalWithItemCountText)
+       
+            <form method="get" action="@Url.Action("Index")" data-myscripts-ajax="true" data-myscripts-target="#movieList">
+
+                <input class="" type="search" name="searchTerm" data-myscripts-autocomplete="@Url.Action("Autocomplete")" />
+                <input style="margin-bottom:5px;" class="btn btn-primary btn-sm" type="submit" value="Search By Name" />
+
+            </form>
+        </div>
+   
+    
+    @foreach (var item in Model) {
+        <div style="margin: 20px;" class="col-md-2 col-sm-4 hidden-xs hidden-sm">
+            <a href="@Url.Action("Details", new { id = @item.MovieId })">
+                <img style="height:300px;max-width:300px; margin:5px; padding:10px;" class="img img-responsive" src="@item.PosterURL" />
+
+            </a>
+
+        </div>
+
+        <a style=" text-decoration:none;  " href="@Url.Action("Details", new { id = @item.MovieId })">
+            <div style="background-image:url(@item.ScreenShot); height:250px  " class=" smallScreen hidden-md hidden-lg img-responsive">
+                <div class="row" style="">
+                    <h1 style="font-weight:bold;">@item.MovieName </h1>
+                    <div style="font-weight:bold;">
+
+                    </div>
+                </div>
+            </div>
+        </a>
+
+
+}
+ 
+</div>
