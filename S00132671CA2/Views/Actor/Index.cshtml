@@ -1,11 +1,4 @@
-﻿@model PagedList<S00132671CA2.Models.Actor>
-
-@{
-    ViewBag.Title = "Index";
-}
-
-
-
+﻿@model IPagedList<S00132671CA2.Models.Actor>
 
 @Html.Partial("_Actors", Model)
 
@@ -17,33 +10,35 @@
 </div>
 
 
-<script>
+@section scripts {
+    <script>
 
         $(document).ready(function () {
             var my = '@ViewBag.message'
 
             switch (my) {
-                case "Added":
-                    toastr.success('Thanks for adding a Movie');
-                    break;
                 case "Warning":
-                    toastr.warning('That was not the page you were looking for Luke');
+                    toastr.error('That is not the page you are looking for Luke');
                     break;
+                case "Gone":
+                    toastr.info('The Force is Strong in you');
+
             }
 
         });
 
-
-
+    
     function createActor() {
-            $('#Placement').load('@Url.Action("Create", "Actor")').show();
+        $('#Placement').load('@Url.Action("Create", "Actor")').show();
+        $('#HelperModal').modal('show');
+    }
+
+        function createMovie() {
+            $('#Placement').load('@Url.Action("Create","Home")').show();
             $('#HelperModal').modal('show');
         }
 
-        function popDelete(movieID) {
-            $('#Placement').load('@Url.Action("Delete")' + '?id=' + movieID).show();
-            $('#HelperModal').modal('show');
-        }
-
-</script>
+    </script>
 }
+
+

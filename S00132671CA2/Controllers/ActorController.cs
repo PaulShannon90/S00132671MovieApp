@@ -31,23 +31,29 @@ namespace S00132671CA2.Controllers
         }
 
         public ActionResult Index(string message, int page = 1, string searchTerm = null)
+        
         {
 
             var actors = from mo in db.Actors
-                         orderby mo.ActorName ascending
+                         orderby mo.ActorName descending
                          where searchTerm == null || mo.ActorName.Contains(searchTerm)
                          select mo;
 
+            if (!string.IsNullOrEmpty(message))
+            {
+                ViewBag.message = message;
+
+            }
 
 
 
 
             if (Request.IsAjaxRequest())
             {
-                return PartialView("_Actors", actors.ToPagedList(page, 4));
+                return PartialView("_Actors", actors.ToPagedList(page, 6));
             }
 
-            return View(actors.ToPagedList(page, 4));
+            return View(actors.ToPagedList(page, 6));
         }
 
         //
@@ -154,7 +160,7 @@ namespace S00132671CA2.Controllers
         {
             db.Actors.Remove(db.Actors.Find(id));
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { message = "Gone" });
         }
     }
 }

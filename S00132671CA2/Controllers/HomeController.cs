@@ -103,7 +103,7 @@ namespace S00132671CA2.Controllers
                     db.Movies.Add(movie);
                     db.SaveChanges();
 
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Details", new { id =movie.MovieId, message = "Success" });
                 }
                 else
                 {
@@ -162,7 +162,7 @@ namespace S00132671CA2.Controllers
         {
             db.Movies.Remove(db.Movies.Find(id));
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new {message = "Deleted" });
         }
     }
 }
