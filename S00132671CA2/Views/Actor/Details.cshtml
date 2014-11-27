@@ -6,7 +6,7 @@
 <div class="container">
     <div class="row">
         <div class="hidden-xs hidden-sm col-md-6">
-            <img style="height:75%; width:75%" class="img-responsive" src="@Html.DisplayFor(model => model.ActorImage)" />
+            <img style="" class="img-responsive ActorDetail" src="@Html.DisplayFor(model => model.ActorImage)" />
         </div>
         <div class="xol-sm-12 col-xs-12 col-md-6">
             <div class="lead"><h1>@Html.DisplayFor(model => model.ActorName)</h1></div>
@@ -18,7 +18,7 @@
             @Html.DisplayFor(model => model.Bio)
            
             <hr />
-            <h4 class="text-center">Appears In</h4>
+            <h4 class="text-center ">Appears In</h4>
            
 
             @if (@Model.Movies.Count() == 0)
@@ -38,9 +38,9 @@
             {
                 <div class="row">
 
-                    <div class="col-md-2 col-md-offset-5 col-sm-2 col-sm-offset-5 col-xs-2 col-xs-offset-4 ">
+                    <div class="text-center ">
 
-                        <a href="@Url.Action("Details", "Home", new {id = @item.MovieId})" class="btn btn-default btn-sm text-center " style="">
+                        <a href="@Url.Action("Details", "Home", new {id = @item.MovieId})" class="  btn btn-default btn-sm text-center Filmography " style="">
                             @item.Movie.MovieName
                         </a>
                     </div>

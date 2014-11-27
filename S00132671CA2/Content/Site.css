@@ -48,3 +48,26 @@ hr{
       text-decoration: none;
 }
 
+.ActorTextArea
+{
+    height: 150px; 
+    cursor: pointer; 
+     background-color:#2b3e50;
+      color:#ebebeb;
+}
+
+.Filmography{
+    width:250px; 
+    margin-bottom:5px;
+}
+
+.ActorDetail
+{
+    height:75%; width:75%;
+}
+
+.ActorImages
+{
+    height:200px;max-width:200px;
+}
+

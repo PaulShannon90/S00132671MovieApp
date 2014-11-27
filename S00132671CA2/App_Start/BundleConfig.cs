@@ -33,7 +33,7 @@ namespace S00132671CA2
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include( "~/Content/Site.css","~/Content/superheroBootstrap.css",
+            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/superheroBootstrap.css","~/Content/Site.css",
                 "~/Content/toastr.css", "~/Content/PagedList.css", "~/Content/bootstrap-datetimepicker.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
