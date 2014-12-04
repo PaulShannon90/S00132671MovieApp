@@ -23,6 +23,7 @@ namespace S00132671CA2.Controllers
         public PartialViewResult Create()
         {
             CastList castlist = new CastList();
+            //Dropdownlists
             ViewBag.MovieId = new SelectList(db.Movies, "MovieId", "MovieName", castlist.MovieId);
             ViewBag.ActorId = new SelectList(db.Actors, "ActorId", "ActorName", castlist.ActorId);
 
@@ -36,12 +37,13 @@ namespace S00132671CA2.Controllers
         {
             if (ModelState.IsValid)
             {
-                var login = from d in db.Cast
+                //check to see if there's already a cast member with the two id's assigned to the movie
+                var cast = from d in db.Cast
                             where d.ActorId == castlist.ActorId
                             && d.MovieId == castlist.MovieId
                             select d;
 
-                if (login.Any())
+                if (cast.Any())
                 {
                     return RedirectToAction("Details", "Home", new { id = castlist.MovieId, message = "DataError" });
                 }

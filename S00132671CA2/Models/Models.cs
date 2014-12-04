@@ -67,11 +67,6 @@ namespace S00132671CA2.Models
         [Required]
         [Display(Name = "Actor Name")]
         public string ActorName { get; set; }
-
-        [Display(Name = "Date Of Birth"), DataType(DataType.Date),
-                    DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        [Required]
-        public DateTime DOB { get; set; }
            [Required]
         public string Bio { get; set; }
          [Required]

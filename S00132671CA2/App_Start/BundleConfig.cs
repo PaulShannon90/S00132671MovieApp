@@ -18,8 +18,8 @@ namespace S00132671CA2
                          "~/Scripts/Site.js",
                          "~/Scripts/tooltipster.js",
                          "~/Scripts/moment.js",
-                         "~/Scripts/bootstrap-datetimepicker.js"
-                          ));
+                         "~/Scripts/bootstrap-datetimepicker.js",
+                          "~/Scripts/DatePickerReady.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
                         "~/Scripts/jquery-ui-{version}.js"));

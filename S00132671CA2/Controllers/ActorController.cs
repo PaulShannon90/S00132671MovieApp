@@ -17,7 +17,7 @@ namespace S00132671CA2.Controllers
 
         MoviesContext db = new MoviesContext();
 
-
+        //autocomplete for cast names
         public ActionResult Autocomplete(string term)
         {
             var model =
@@ -30,12 +30,13 @@ namespace S00132671CA2.Controllers
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Index(string message, int page = 1, string searchTerm = null)
+        public ActionResult Index(string message, int page = 1, string searchTerm = null, string sortOrder = null)
         
         {
 
+            //get all actors
             var actors = from mo in db.Actors
-                         orderby mo.ActorName descending
+                         orderby mo.ActorName ascending
                          where searchTerm == null || mo.ActorName.Contains(searchTerm)
                          select mo;
 
@@ -43,6 +44,20 @@ namespace S00132671CA2.Controllers
             {
                 ViewBag.message = message;
 
+            }
+
+            switch (sortOrder)
+            {
+                case "descending":
+                    actors = actors.OrderByDescending(ac => ac.ActorName);
+                    break;
+                case "ascending":
+                    actors = from ac in db.Actors
+                             orderby ac.ActorName ascending
+                             where searchTerm == null || ac.ActorName.Contains(searchTerm)
+                             select ac;
+
+                    break;
             }
 
 

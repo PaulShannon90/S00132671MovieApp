@@ -17,6 +17,8 @@
             var my = '@ViewBag.message'
 
             switch (my) {
+                case "Success":
+                    toastr.success('Thanks for adding @ViewBag.ActorName to the site!');
                 case "Warning":
                     toastr.error('That is not the page you are looking for Luke');
                     break;

@@ -16,7 +16,7 @@ namespace S00132671CA2.Controllers
         MoviesContext db = new MoviesContext();
 
 
-
+        //autcomplete method for search
         public ActionResult Autocomplete(string term)
         {
             var model =
@@ -29,21 +29,33 @@ namespace S00132671CA2.Controllers
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Index(string message, int page = 1, string searchTerm = null)
+        public ActionResult Index(string message, string movieName, int page = 1, string searchTerm = null, string sortOrder = null)
         {
 
-            if (!string.IsNullOrEmpty(message))
-            {
-                ViewBag.message = message;
+            if (!string.IsNullOrEmpty(message)) { ViewBag.message = message; }
 
-            }
+            if (!string.IsNullOrEmpty(movieName)) { ViewBag.MovieName = movieName; }
             
-
+            //get all movies 
             var movies = from mo in db.Movies
                           orderby mo.MovieName ascending
                           where searchTerm == null || mo.MovieName.Contains(searchTerm)
                           select mo;
+
             
+            switch(sortOrder)
+            {
+                case "descending":
+                    movies = movies.OrderByDescending(mo => mo.MovieName);
+                    break;
+                case "ascending":
+                    movies = from mo in db.Movies
+                             orderby mo.MovieName ascending
+                             where searchTerm == null || mo.MovieName.Contains(searchTerm)
+                             select mo;
+
+                    break;
+            }
 
 
 
@@ -69,20 +81,16 @@ namespace S00132671CA2.Controllers
 
             var movies = db.Movies.Find(id);
 
+            //if no movies return to index
             if (movies == null)
                 return RedirectToAction("Index", new { message = "Warning" });
 
             return View(movies);
         }
-        //
-        // GET: /Home/Create
-
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
+   
 
 
+        //partial create view for modal
         [HttpGet]
         public PartialViewResult Create()
         {
@@ -102,8 +110,9 @@ namespace S00132671CA2.Controllers
                    
                     db.Movies.Add(movie);
                     db.SaveChanges();
+                    //return to index with message for toast notification
 
-                    return RedirectToAction("Details", new { id =movie.MovieId, message = "Success" });
+                    return RedirectToAction("Index", new { message = "Success", movieName = movie.MovieName });
                 }
                 else
                 {
@@ -138,6 +147,7 @@ namespace S00132671CA2.Controllers
 
                 db.Entry(editMovie).State = EntityState.Modified;
                 db.SaveChanges();
+                //return to the movie you've just edited
                 return RedirectToAction("Details", new { id = editMovie.MovieId });
             }
             catch
@@ -160,9 +170,14 @@ namespace S00132671CA2.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult ConfimDelete(int id)
         {
-            db.Movies.Remove(db.Movies.Find(id));
-            db.SaveChanges();
-            return RedirectToAction("Index", new {message = "Deleted" });
+            if (ModelState.IsValid)
+            {
+                db.Movies.Remove(db.Movies.Find(id));
+                db.SaveChanges();
+                return RedirectToAction("Index", new { message = "Gone" });
+            }
+            else
+                return View();
         }
     }
 }

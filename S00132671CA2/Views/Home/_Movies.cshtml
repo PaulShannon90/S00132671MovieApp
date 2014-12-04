@@ -2,20 +2,55 @@
 
 
 <div id="movieList">
-    <div class="pagedList text-center row" style="margin-bottom:10px;" data-myscripts-target="#movieList">
+    <div class="pagedList text-center row" style="margin-bottom:5px;" data-myscripts-target="#movieList">
         @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
         PagedListRenderOptions.MinimalWithItemCountText)
-       
-            <form method="get" action="@Url.Action("Index")" data-myscripts-ajax="true" data-myscripts-target="#movieList">
-
-                <input class="" type="search" name="searchTerm" data-myscripts-autocomplete="@Url.Action("Autocomplete")" />
-                <input style="margin-bottom:5px;" class="btn btn-primary btn-sm" type="submit" value="Search By Name" />
-
-            </form>
+        <div style="margin-bottom:5px;" class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                Sort By Name <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li>@Ajax.ActionLink("Descending",
+                 "Index",
+                 new { sortOrder = "descending" },
+                 new AjaxOptions
+                 {
+                     UpdateTargetId = "movieList", //
+                     InsertionMode = InsertionMode.Replace, //
+                     HttpMethod = "GET" //
+                 }, new { @class = "btn btn-sm btn-default", })</li>
+                <li>@Ajax.ActionLink("Ascending",
+                 "Index",
+                 new { sortOrder = "ascending" },
+                 new AjaxOptions
+                 {
+                     UpdateTargetId = "movieList", //
+                     InsertionMode = InsertionMode.Replace, //
+                     HttpMethod = "GET",
+                     //
+                 }, new { @class = "btn  btn-default", })</li>
+               
+            </ul>
         </div>
-   
-    
-    @foreach (var item in Model) {
+       
+           
+       
+
+
+        <form method="get" action="@Url.Action("Index")" data-myscripts-ajax="true" data-myscripts-target="#movieList">
+
+            <input class="" type="search" name="searchTerm" data-myscripts-autocomplete="@Url.Action("Autocomplete")" />
+            <input style="margin-bottom:5px;" class="btn btn-primary btn-sm" type="submit" value="Search By Name" />
+
+        </form>
+    </div>
+
+
+
+
+
+    @foreach (var item in Model)
+    {
         <div style="margin: 20px;" class="col-md-2 col-sm-4 hidden-xs hidden-sm">
             <a href="@Url.Action("Details", new { id = @item.MovieId })">
                 <img style="height:300px;max-width:300px; margin:5px; padding:10px;" class="img img-responsive" src="@item.PosterURL" />
@@ -36,6 +71,6 @@
         </a>
 
 
-}
- 
+    }
+
 </div>
