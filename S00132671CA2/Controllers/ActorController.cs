@@ -30,7 +30,7 @@ namespace S00132671CA2.Controllers
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Index(string message, int page = 1, string searchTerm = null, string sortOrder = null)
+        public ActionResult Index(string message, int page = 1, string searchTerm = null)
         
         {
 
@@ -41,28 +41,9 @@ namespace S00132671CA2.Controllers
                          select mo;
 
             if (!string.IsNullOrEmpty(message))
-            {
-                ViewBag.message = message;
+            { ViewBag.message = message; }
 
-            }
-
-            switch (sortOrder)
-            {
-                case "descending":
-                    actors = actors.OrderByDescending(ac => ac.ActorName);
-                    break;
-                case "ascending":
-                    actors = from ac in db.Actors
-                             orderby ac.ActorName ascending
-                             where searchTerm == null || ac.ActorName.Contains(searchTerm)
-                             select ac;
-
-                    break;
-            }
-
-
-
-
+          
             if (Request.IsAjaxRequest())
             {
                 return PartialView("_Actors", actors.ToPagedList(page, 6));
@@ -74,13 +55,12 @@ namespace S00132671CA2.Controllers
         //
         // GET: /Actor/Details/5
 
-        public ActionResult Details(int id, string message)
+        public ActionResult Details(int id, string message, string actorName)
         {
-            if (!string.IsNullOrEmpty(message))
-            {
-                ViewBag.message = message;
+            if (!string.IsNullOrEmpty(message)) {  ViewBag.message = message;}
 
-            }
+            if (!string.IsNullOrEmpty(actorName))
+            { ViewBag.ActorName = actorName; }
 
             var actors = db.Actors.Find(id);
 
@@ -114,7 +94,7 @@ namespace S00132671CA2.Controllers
                     db.Actors.Add(actor);
                     db.SaveChanges();
 
-                    return RedirectToAction("Details", "Actor", new { id = actor.ActorId  });
+                    return RedirectToAction("Details", "Actor", new { id = actor.ActorId, message = "Success", actorName = actor.ActorName  });
                 }
                 else
                 {

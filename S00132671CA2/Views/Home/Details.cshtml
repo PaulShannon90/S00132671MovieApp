@@ -37,7 +37,7 @@
 
                     <div class="col-md-5">
 
-                        <a class="btn btn-default btn-sm" href="@Url.Action("Details", "Actor", new { id = @item.ActorId })" style="margin-bottom: 20px;">
+                        <a class="btn btn-default btn-sm" onmouseover="showActorMovies(@item.ActorId)" href="@Url.Action("Details", "Actor", new { id = @item.ActorId })" style="margin-bottom: 20px;">
                             <span class=" glyphicon glyphicon-user">
                             </span> @item.Actor.ActorName
                         </a>
@@ -66,7 +66,8 @@
                     </div>
                 </div>
             }
-
+            <div class="col-md-12" id="Detail">
+            </div>
             <hr />
             <h4 class="text-center">Click on an Actor or Screen Name to Edit their details</h4>
             <hr />
@@ -115,6 +116,10 @@
             }
 
         });
+        function showActorMovies(actorId) {
+            $('#Detail').load('@Url.Action("ShowActorMovies")' + '?id=' + actorId).show();
+        }
+
     function showEditModal(movieID) {
         $('#Placement').load('@Url.Action("Edit")' + '?id=' + movieID).show();
         $('#HelperModal').modal('show');

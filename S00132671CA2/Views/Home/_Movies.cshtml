@@ -5,38 +5,9 @@
     <div class="pagedList text-center row" style="margin-bottom:5px;" data-myscripts-target="#movieList">
         @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
         PagedListRenderOptions.MinimalWithItemCountText)
-        <div style="margin-bottom:5px;" class="btn-group">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                Sort By Name <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-                <li>@Ajax.ActionLink("Descending",
-                 "Index",
-                 new { sortOrder = "descending" },
-                 new AjaxOptions
-                 {
-                     UpdateTargetId = "movieList", //
-                     InsertionMode = InsertionMode.Replace, //
-                     HttpMethod = "GET" //
-                 }, new { @class = "btn btn-sm btn-default", })</li>
-                <li>@Ajax.ActionLink("Ascending",
-                 "Index",
-                 new { sortOrder = "ascending" },
-                 new AjaxOptions
-                 {
-                     UpdateTargetId = "movieList", //
-                     InsertionMode = InsertionMode.Replace, //
-                     HttpMethod = "GET",
-                     //
-                 }, new { @class = "btn  btn-default", })</li>
-               
-            </ul>
-        </div>
        
-           
        
-
-
+      
         <form method="get" action="@Url.Action("Index")" data-myscripts-ajax="true" data-myscripts-target="#movieList">
 
             <input class="" type="search" name="searchTerm" data-myscripts-autocomplete="@Url.Action("Autocomplete")" />

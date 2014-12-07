@@ -279,6 +279,7 @@
     <Content Include="Views\Actor\_Edit.cshtml" />
     <Content Include="Views\Actor\_Delete.cshtml" />
     <Content Include="Views\Actor\Index.cshtml" />
+    <Content Include="Views\Shared\_ActorMovies.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

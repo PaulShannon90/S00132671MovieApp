@@ -1,0 +1,15 @@
+﻿@model S00132671CA2.Models.Actor
+
+
+<h4 class="text-center"> @Model.ActorName Appears in</h4>
+@foreach (var item in Model.Movies)
+{
+    <div class="row">
+        <div class="text-center ">
+
+            <a href="@Url.Action("Details", "Home", new {id = @item.MovieId})" class="  btn btn-default btn-sm text-center Filmography " style="">
+                @item.Movie.MovieName
+            </a>
+        </div>
+    </div>
+}

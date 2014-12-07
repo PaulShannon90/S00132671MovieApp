@@ -86,6 +86,9 @@
 
             switch(my)
             {
+                case "Success":
+                    toastr.success('Thanks for adding @ViewBag.ActorName to the site!');
+                    break;
                 case "DataError":
                     toastr.error('That actor is already listed for this movie.');
                     break;

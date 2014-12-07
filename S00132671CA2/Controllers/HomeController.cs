@@ -29,7 +29,7 @@ namespace S00132671CA2.Controllers
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Index(string message, string movieName, int page = 1, string searchTerm = null, string sortOrder = null)
+        public ActionResult Index(string message, string movieName, int page = 1, string searchTerm = null)
         {
 
             if (!string.IsNullOrEmpty(message)) { ViewBag.message = message; }
@@ -41,23 +41,6 @@ namespace S00132671CA2.Controllers
                           orderby mo.MovieName ascending
                           where searchTerm == null || mo.MovieName.Contains(searchTerm)
                           select mo;
-
-            
-            switch(sortOrder)
-            {
-                case "descending":
-                    movies = movies.OrderByDescending(mo => mo.MovieName);
-                    break;
-                case "ascending":
-                    movies = from mo in db.Movies
-                             orderby mo.MovieName ascending
-                             where searchTerm == null || mo.MovieName.Contains(searchTerm)
-                             select mo;
-
-                    break;
-            }
-
-
 
 
             if(Request.IsAjaxRequest())
@@ -74,10 +57,7 @@ namespace S00132671CA2.Controllers
         public ActionResult Details(int id, string message)
         {
             if (!string.IsNullOrEmpty(message))
-            {
-                ViewBag.message = message;
-
-            }
+            {ViewBag.message = message;  }
 
             var movies = db.Movies.Find(id);
 
@@ -95,6 +75,11 @@ namespace S00132671CA2.Controllers
         public PartialViewResult Create()
         {
             return PartialView("_Create");
+        }
+
+        public PartialViewResult ShowActorMovies(int id)
+        {
+            return PartialView("_ActorMovies", db.Actors.Find(id));
         }
 
         //
